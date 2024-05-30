@@ -22,9 +22,9 @@
         "sudo apt-get auto-clean -y &&",
         "sudo apt-get install -y python3-wheel python3-venv udev openocd python3-pyocd &&",
         "sudo apt-get remove --purge -y openocd &&",
-        "wget https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20240318/openocd-esp32-linux-arm64-0.12.0-esp32-20240318.tar.gz &&",
-        "tar -xvzf ./openocd-esp32-linux-arm64-0.12.0-esp32-20240318.tar.gz &&",
-        "rm ./openocd-esp32-linux-arm64-0.12.0-esp32-20240318.tar.gz &&",
+        "wget https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20240318/openocd-esp32-linux-amd64-0.12.0-esp32-20240318.tar.gz &&",
+        "tar -xvzf ./openocd-esp32-linux-amd64-0.12.0-esp32-20240318.tar.gz &&",
+        "rm ./openocd-esp32-linux-amd64-0.12.0-esp32-20240318.tar.gz &&",
         "sudo mv openocd-esp32 /opt &&",
         "sudo ln /opt/openocd-esp32/bin/openocd /usr/bin/openocd"
     ],
