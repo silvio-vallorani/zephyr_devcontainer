@@ -1,0 +1,55 @@
+{
+    "name": "Zephyr DevContainer",
+    "image": "ghcr.io/zephyrproject-rtos/ci-base:latest",
+    "remoteUser": "user",
+    "runArgs": [
+        "-v", "/dev:/dev",  //
+        "--privileged"      // allows access to tty* devices
+    ],
+    "workspaceMount": "source=${localWorkspaceFolder},target=/home/user/workspace,type=bind",
+    "workspaceFolder": "/home/user/workspace",
+    //"onCreateCommand": "west init -l app/ && west update --narrow -o=--depth=1 && west zephyr-export && pip install -r deps/zephyr/scripts/requirements-base.txt",
+    //"onCreateCommand": "sudo chmod -R 775 /usr/local/lib/python3.10/dist-packages && sudo chmod -R 775 /usr/lib/python3/dist-packages",
+    "mounts": [
+        "source=${localWorkspaceFolder}/.vscode/,target=/home/user/workspace/.vscode,type=bind,consistency=cached"
+    ],
+    "forwardPorts": [
+	],
+    "postStartCommand": "sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get auto-clean -y && sudo apt-get install -y python3-wheel python3-venv",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                // Teminal
+                "terminal.integrated.defaultProfile.linux": "bash",
+                // Hush CMake
+                "cmake.configureOnOpen": false,
+                // IntelliSense
+                //"C_Cpp.default.compilerPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+                //"C_Cpp.default.compileCommands": "build/compile_commands.json",
+                // File Associations
+                "files.associations": {}
+            },
+            "extensions": [
+                // c/c++
+                "ms-vscode.cpptools-extension-pack",
+                // python
+                "ms-python.python",
+                // zephyr ide
+                "mylonics.zephyr-ide",
+                "nordic-semiconductor.nrf-devicetree",
+                "nordic-semiconductor.nrf-kconfig",
+                // embedded tools
+                "dan-c-underwood.arm",
+                "ms-vscode.vscode-embedded-tools",
+                "ms-vscode.vscode-serial-monitor",
+                // yaml
+                "redhat.vscode-yaml",
+                // markdown
+                "yzhang.markdown-all-in-one",
+                // editing
+                "stkb.rewrap",
+                "wayou.vscode-todo-highlight"
+            ]
+        }
+    }
+}
