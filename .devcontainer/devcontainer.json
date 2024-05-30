@@ -39,6 +39,7 @@
                 "nordic-semiconductor.nrf-devicetree",
                 "nordic-semiconductor.nrf-kconfig",
                 // embedded tools
+                "marus25.cortex-debug",
                 "dan-c-underwood.arm",
                 "ms-vscode.vscode-embedded-tools",
                 "ms-vscode.vscode-serial-monitor",
