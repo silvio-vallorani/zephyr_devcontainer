@@ -3,19 +3,31 @@
     "image": "ghcr.io/zephyrproject-rtos/ci-base:latest",
     "remoteUser": "user",
     "runArgs": [
-        "-v", "/dev:/dev",  //
-        "--privileged"      // allows access to tty* devices
+        "--privileged",     // allows access to tty* devices
+        "-v", "/dev/:/dev/" // map all /dev in /dev
     ],
     "workspaceMount": "source=${localWorkspaceFolder},target=/home/user/workspace,type=bind",
     "workspaceFolder": "/home/user/workspace",
-    //"onCreateCommand": "west init -l app/ && west update --narrow -o=--depth=1 && west zephyr-export && pip install -r deps/zephyr/scripts/requirements-base.txt",
-    //"onCreateCommand": "sudo chmod -R 775 /usr/local/lib/python3.10/dist-packages && sudo chmod -R 775 /usr/lib/python3/dist-packages",
     "mounts": [
         "source=${localWorkspaceFolder}/.vscode/,target=/home/user/workspace/.vscode,type=bind,consistency=cached"
     ],
     "forwardPorts": [
 	],
-    "postStartCommand": "sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get dist-upgrade -y && sudo apt-get autoremove -y && sudo apt-get clean -y && sudo apt-get auto-clean -y && sudo apt-get install -y python3-wheel python3-venv",
+    "postStartCommand": [
+        "sudo apt-get update &&",
+        "sudo apt-get upgrade -y &&",
+        "sudo apt-get dist-upgrade -y &&",
+        "sudo apt-get autoremove -y &&",
+        "sudo apt-get clean -y &&",
+        "sudo apt-get auto-clean -y &&",
+        "sudo apt-get install -y python3-wheel python3-venv udev openocd python3-pyocd &&",
+        "sudo apt-get remove --purge -y openocd &&",
+        "wget https://github.com/espressif/openocd-esp32/releases/download/v0.12.0-esp32-20240318/openocd-esp32-linux-arm64-0.12.0-esp32-20240318.tar.gz &&",
+        "tar -xvzf ./openocd-esp32-linux-arm64-0.12.0-esp32-20240318.tar.gz &&",
+        "rm ./openocd-esp32-linux-arm64-0.12.0-esp32-20240318.tar.gz &&",
+        "sudo mv openocd-esp32 /opt &&",
+        "sudo ln /opt/openocd-esp32/bin/openocd /usr/bin/openocd"
+    ],
     "customizations": {
         "vscode": {
             "settings": {
@@ -24,8 +36,8 @@
                 // Hush CMake
                 "cmake.configureOnOpen": false,
                 // IntelliSense
-                //"C_Cpp.default.compilerPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
-                //"C_Cpp.default.compileCommands": "build/compile_commands.json",
+                 //"C_Cpp.default.compilerPath": "/opt/toolchains/zephyr-sdk-0.16.1/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+                 //"C_Cpp.default.compileCommands": "build/compile_commands.json",
                 // File Associations
                 "files.associations": {}
             },
